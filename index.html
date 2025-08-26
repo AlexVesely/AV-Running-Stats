@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AV Running Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Log Your Run</h1>
+    </header>
+
+    <form id="runForm">
+        <!-- Date of the run -->
+        <label for="runDate">Date:</label>
+        <input type="date" id="runDate" required>
+        <br>
+
+        <!-- Distance in km -->
+        <label for="distance">Distance (km):</label>
+        <input type="number" id="distance" class="distance-input" placeholder="0" min="0"required>
+        <br>
+
+        <!-- Time: hours, minutes, seconds -->
+        <label for="hours">Time:</label>
+        <input type="number" id="hours" class="time-input" placeholder="hh" min="0" step="1" required> :
+        <input type="number" id="minutes" class="time-input" placeholder="mm" min="0" max="59" step="1" required> :
+        <input type="number" id="seconds" class="time-input" placeholder="ss" min="0" max="59" step="1" required>
+        <br>
+
+        <input type="submit" value="Add Run">
+        <input type="reset" value="Clear">
+    </form>
+
+
+
+
+
+        
+</body>
+
+
+
+
+</html>
