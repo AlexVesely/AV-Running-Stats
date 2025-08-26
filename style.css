@@ -1,3 +1,37 @@
+body{
+    margin: 0px;
+}
+main{
+    margin: 10px;
+}
+h1{
+    text-align: center; 
+}
+.navbar ul{
+    list-style-type: none;
+    background-color: rgb(65, 58, 58);
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center; 
+}
+.navbar a{
+    color: aqua;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+.navbar a:hover{
+    color: white;
+}
+.navbar li{
+    flex: 1;
+    text-align: center;  
+}
+
 /* Make time inputs narrower */
 .distance-input {
     width: 3em;

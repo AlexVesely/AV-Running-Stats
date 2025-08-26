@@ -6,8 +6,20 @@
 </head>
 <body>
     <header>
-        <h1>Log Your Run</h1>
+        <h1>AV Running Tracker</h1>
     </header>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Log Runs</a></li>
+            <li><a href="">Pace Calculator</a></li>
+            <li><a href="">Targets</a></li>
+            <li><a href="">Visualise Runs</a></li>
+        </ul>
+    </nav>
+
+    <br>
 
     <form id="runForm">
         <!-- Date of the run -->
@@ -30,6 +42,10 @@
         <input type="submit" value="Add Run">
         <input type="reset" value="Clear">
     </form>
+
+    <h2>My Runs</h2>
+    <div id="runsList"></div>
+    <script src="script.js"></script>
 
 
 
