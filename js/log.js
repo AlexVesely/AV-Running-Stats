@@ -1,3 +1,5 @@
+import Run from "./Run.js";
+
 // Array to hold all runs
 let runs = [];
 
@@ -17,14 +19,7 @@ form.addEventListener("submit", function(event) {
     const minutes = parseInt(document.getElementById("minutes").value) || 0;
     const seconds = parseInt(document.getElementById("seconds").value) || 0;
 
-    // Create a run object
-    const run = {
-        date: date,
-        distance: distance,
-        hours: hours,
-        minutes: minutes,
-        seconds: seconds
-    };
+    let run = new Run(date,distance, hours, minutes, seconds);
 
     // Add to runs array
     runs.push(run);
@@ -41,7 +36,7 @@ function displayRuns() {
     runsList.innerHTML = ""; // clear old content, dont output runs on screen already again
 
     runs.forEach((run) => {
-        const pace = calcPace(run.hours, run.minutes, run.seconds, run.distance)
+        const pace = run.getPace();
 
 
         const runEntry = document.createElement("p"); // Make a new <p>
@@ -50,21 +45,4 @@ function displayRuns() {
         ${run.hours}h ${run.minutes}m ${run.seconds}s (Pace: ${pace})`;
         runsList.appendChild(runEntry); //Sticks it into the runsList div
     });
-}
-
-function calcPace(hours, min, sec, distance) {
-    if (distance <= 0) return "Invalid distance";
-
-    const totalSeconds = (hours * 3600) + (min * 60) + sec;
-    const paceSeconds = totalSeconds / distance;
-
-    // Convert pace into mm:ss format
-    const paceMinutes = Math.floor(paceSeconds / 60);
-        const paceRemainingSeconds = Math.round(paceSeconds % 60)
-            .toString()
-            .padStart(2, "0"); // ensures always 2 digits (e.g., 05, 09)
-
-        const paceFormatted = `${paceMinutes}:${paceRemainingSeconds} min/km`;
-        return paceFormatted
-
 }
