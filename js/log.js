@@ -7,6 +7,7 @@ let runs = [];
 // document.getElementById(...) looks into the HTML and grabs the element with that ID.
 const form = document.getElementById("runForm"); // The form
 const runsList = document.getElementById("runsList"); // The list displaying runs
+const deleteButton = document.getElementById("deleteAllButton");
 
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
@@ -38,6 +39,17 @@ form.addEventListener("submit", function(event) {
 
     // Reset form
     form.reset();
+});
+
+deleteButton.addEventListener("click", function() {
+    // Clear the runs array
+    runs = [];
+
+    // Remove from localStorage
+    localStorage.removeItem("runs");
+
+    // Clear the displayed list
+    runsList.innerHTML = "";
 });
 
 // Function to display all runs
