@@ -8,10 +8,15 @@ let runs = [];
 const form = document.getElementById("runForm"); // The form
 const runsList = document.getElementById("runsList"); // The list displaying runs
 const deleteButton = document.getElementById("deleteAllButton");
+
 const sortDateCButton = document.getElementById("sortDateC");
 const sortDateNCButton = document.getElementById("sortDateNC");
 const sortDistanceAButton = document.getElementById("sortDistanceA");
 const sortDistanceDButton = document.getElementById("sortDistanceD");
+const sortTimeAButton = document.getElementById("sortTimeA");
+const sortTimeDButton = document.getElementById("sortTimeD");
+const sortPaceAButton = document.getElementById("sortPaceA");
+const sortPaceDButton = document.getElementById("sortPaceD");
 
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
@@ -85,6 +90,38 @@ sortDistanceAButton.addEventListener("click", () => {
 sortDistanceDButton.addEventListener("click", () => {
     // Sort runs array by distance
     sortByDistance(false);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortTimeAButton.addEventListener("click", () => {
+    // Sort runs array by time
+    sortByTime(true);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortTimeDButton.addEventListener("click", () => {
+    // Sort runs array by time
+    sortByTime(false);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortPaceAButton.addEventListener("click", () => {
+    // Sort runs array by pace
+    sortByPace(true);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortPaceDButton.addEventListener("click", () => {
+    // Sort runs array by pace
+    sortByPace(false);
     
     // Re-render the runs
     displayRuns();
@@ -177,5 +214,29 @@ function sortByDistance(ascending = true) {
         runs.sort((a, b) => a.distance - b.distance);
     } else {
         runs.sort((a, b) => b.distance - a.distance);
+    }
+}
+
+/**
+ * Sorts the runs array by total time.
+ * @param {boolean} ascending - true = shortest first, false = longest first
+ */
+function sortByTime(ascending = true) {
+    if (ascending) {
+        runs.sort((a, b) => a.getTotalSeconds() - b.getTotalSeconds());
+    } else {
+        runs.sort((a, b) => b.getTotalSeconds() - a.getTotalSeconds());
+    }
+}
+
+/**
+ * Sorts the runs array by pace.
+ * @param {boolean} ascending - true = fastest first, false = slowest first
+ */
+function sortByPace(ascending = true) {
+    if (ascending) {
+        runs.sort((a, b) => (a.getTotalSeconds() / a.distance) - (b.getTotalSeconds() / b.distance));
+    } else {
+        runs.sort((a, b) => (b.getTotalSeconds() / b.distance) - (a.getTotalSeconds() / a.distance));
     }
 }
