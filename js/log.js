@@ -8,6 +8,10 @@ let runs = [];
 const form = document.getElementById("runForm"); // The form
 const runsList = document.getElementById("runsList"); // The list displaying runs
 const deleteButton = document.getElementById("deleteAllButton");
+const sortDateCButton = document.getElementById("sortDateC");
+const sortDateNCButton = document.getElementById("sortDateNC");
+const sortDistanceAButton = document.getElementById("sortDistanceA");
+const sortDistanceDButton = document.getElementById("sortDistanceD");
 
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
@@ -52,6 +56,38 @@ deleteButton.addEventListener("click", function() {
     // Clear the displayed list
     runsList.innerHTML = "";
     }
+});
+
+sortDateCButton.addEventListener("click", () => {
+    // Sort runs array by date
+    sortByDate(true);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortDateNCButton.addEventListener("click", () => {
+    // Sort runs array by date
+    sortByDate(false);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortDistanceAButton.addEventListener("click", () => {
+    // Sort runs array by distance
+    sortByDistance(true);
+    
+    // Re-render the runs
+    displayRuns();
+});
+
+sortDistanceDButton.addEventListener("click", () => {
+    // Sort runs array by distance
+    sortByDistance(false);
+    
+    // Re-render the runs
+    displayRuns();
 });
 
 // Display all runs
@@ -114,4 +150,32 @@ function loadRuns() {
     }
 
     displayRuns();
+}
+
+/**
+ * Sorts the runs array by date.
+ * @param {boolean} chronological - true = oldest first, false = newest first
+ */
+function sortByDate(chronological = true) {
+    if (chronological) {
+        // Use .sort() with compare function (a,b) => 
+        // Should a - b be positive or negative? That is how we know an element 
+        // should be is before/after another
+        // Turn date string into date object, so its milliseconds, and compare that int
+        runs.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else {
+        runs.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+}
+
+/**
+ * Sorts the runs array by distance.
+ * @param {boolean} ascending - true = smallest first, false = largest first
+ */
+function sortByDistance(ascending = true) {
+    if (ascending) {
+        runs.sort((a, b) => a.distance - b.distance);
+    } else {
+        runs.sort((a, b) => b.distance - a.distance);
+    }
 }
