@@ -7,6 +7,10 @@ let runs = [];
 // If this is an int, we're editing the run at that index
 let editingIndex = null;
 
+// Store current way runs are being sorted
+// You can store a method in a variable!?
+let currentSort = () => sortByDate(true);
+
 // document.getElementById(...) looks into the HTML and grabs the element with that ID.
 const form = document.getElementById("runForm"); // The form
 const runsList = document.getElementById("runsList"); // The list displaying runs
@@ -55,6 +59,7 @@ form.addEventListener("submit", function(event) {
         editingIndex = null; // back to add mode
         submitBtn.textContent = "Add Run";
         cancelEditBtn.style.display = "none";
+        currentSort();
     }
 
     // Update display
@@ -269,8 +274,10 @@ function sortByDate(chronological = true) {
         // should be is before/after another
         // Turn date string into date object, so its milliseconds, and compare that int
         runs.sort((a, b) => new Date(a.date) - new Date(b.date));
+        currentSort = () => sortByDate(true); // update current sort choice
     } else {
         runs.sort((a, b) => new Date(b.date) - new Date(a.date));
+        currentSort = () => sortByDate(false); // update current sort choice
     }
 }
 
@@ -281,8 +288,10 @@ function sortByDate(chronological = true) {
 function sortByDistance(ascending = true) {
     if (ascending) {
         runs.sort((a, b) => a.distance - b.distance);
+        currentSort = () => sortByDistance(true); // update current sort choice
     } else {
         runs.sort((a, b) => b.distance - a.distance);
+        currentSort = () => sortByDistance(false); // update current sort choice
     }
 }
 
@@ -293,8 +302,10 @@ function sortByDistance(ascending = true) {
 function sortByTime(ascending = true) {
     if (ascending) {
         runs.sort((a, b) => a.getTotalSeconds() - b.getTotalSeconds());
+        currentSort = () => sortByTime(true); // update current sort choice        
     } else {
         runs.sort((a, b) => b.getTotalSeconds() - a.getTotalSeconds());
+        currentSort = () => sortByTime(false); // update current sort choice        
     }
 }
 
@@ -305,8 +316,10 @@ function sortByTime(ascending = true) {
 function sortByPace(ascending = true) {
     if (ascending) {
         runs.sort((a, b) => (a.getTotalSeconds() / a.distance) - (b.getTotalSeconds() / b.distance));
+        currentSort = () => sortByPace(true); // update current sort choice
     } else {
         runs.sort((a, b) => (b.getTotalSeconds() / b.distance) - (a.getTotalSeconds() / a.distance));
+        currentSort = () => sortByPace(false); // update current sort choice
     }
 }
 
