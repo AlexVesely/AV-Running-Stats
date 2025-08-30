@@ -38,9 +38,13 @@
         <input type="number" id="seconds" class="time-input" placeholder="ss" min="0" max="59" step="1" required>
         <br>
 
-        <input type="submit" value="Add Run">
+        <!-- Main actions -->
+        <button type="submit" id="submitBtn">Add Run</button>
         <input type="reset" value="Clear">
     </form>
+
+    <!-- Cancel editing is separate (not a form action) -->
+    <button type="button" id="cancelEditBtn" style="display:none;">Cancel Editing</button>
 
     <h2>My Runs</h2>
     <div id="runsList"></div>

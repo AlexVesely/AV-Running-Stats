@@ -3,6 +3,10 @@ import Run from "./Run.js";
 // Array to hold all runs
 let runs = [];
 
+// If this is null it means we're adding a run in the form
+// If this is an int, we're editing the run at that index
+let editingIndex = null;
+
 // Select form and list container
 // document.getElementById(...) looks into the HTML and grabs the element with that ID.
 const form = document.getElementById("runForm"); // The form
@@ -10,6 +14,7 @@ const form = document.getElementById("runForm"); // The form
 const runsList = document.getElementById("runsList"); // The list displaying runs
 
 const deleteButton = document.getElementById("deleteAllButton");
+const cancelEditBtn = document.getElementById("cancelEditBtn"); // new button in HTML, hidden by default
 
 const sortDateCButton = document.getElementById("sortDateC");
 const sortDateNCButton = document.getElementById("sortDateNC");
@@ -37,10 +42,17 @@ form.addEventListener("submit", function(event) {
     const minutes = parseInt(document.getElementById("minutes").value) || 0;
     const seconds = parseInt(document.getElementById("seconds").value) || 0;
 
-    let run = new Run(date,distance, hours, minutes, seconds);
-
-    // Add to runs array
-    runs.push(run);
+    if (editingIndex === null) {
+        // Add new run
+        let run = new Run(date, distance, hours, minutes, seconds);
+        runs.push(run);
+    } else {
+        // Edit existing run
+        runs[editingIndex] = new Run(date, distance, hours, minutes, seconds);
+        editingIndex = null; // back to add mode
+        submitBtn.textContent = "Add Run";
+        cancelEditBtn.style.display = "none";
+    }
 
     // Update display
     displayRuns();
@@ -50,6 +62,13 @@ form.addEventListener("submit", function(event) {
 
     // Reset form
     form.reset();
+});
+
+cancelEditBtn.addEventListener("click", () => {
+    form.reset();
+    editingIndex = null;
+    submitBtn.textContent = "Add Run";
+    cancelEditBtn.style.display = "none";
 });
 
 deleteButton.addEventListener("click", function() {
@@ -175,6 +194,20 @@ function deleteRun(index) {
     runs.splice(index, 1);                        // remove from array
     localStorage.setItem("runs", JSON.stringify(runs));  // update storage
     displayRuns();                                // refresh display
+}
+
+function editRun(index) {
+    const run = runs[index];
+
+    document.getElementById("runDate").value = run.date;
+    document.getElementById("distance").value = run.distance;
+    document.getElementById("hours").value = run.hours;
+    document.getElementById("minutes").value = run.minutes;
+    document.getElementById("seconds").value = run.seconds;
+
+    editingIndex = index;
+    submitBtn.textContent = "Save Run";
+    cancelEditBtn.style.display = "inline"; // show cancel button
 }
 
 
