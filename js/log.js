@@ -33,6 +33,7 @@ const sortPaceDButton = document.getElementById("sortPaceD");
 // DOMContentLoaded is an event that fires when HTML has loaded, so it is now safe to load from localStorage
 window.addEventListener("DOMContentLoaded", loadRuns);
 
+// When page is loaded
 document.addEventListener("DOMContentLoaded", () => {
     setActiveSortButton("sortDateC");
 });
@@ -52,15 +53,19 @@ form.addEventListener("submit", function(event) {
         // Add new run
         let run = new Run(date, distance, hours, minutes, seconds);
         runs.push(run);
-        currentSort();
     } else {
         // Edit existing run
         runs[editingIndex] = new Run(date, distance, hours, minutes, seconds);
         editingIndex = null; // back to add mode
         submitBtn.textContent = "Add Run";
         cancelEditBtn.style.display = "none";
-        currentSort();
     }
+
+    // Show all delete buttons again
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.style.display = "inline"; 
+
+    currentSort();
 
     // Update display
     displayRuns();
@@ -77,6 +82,15 @@ cancelEditBtn.addEventListener("click", () => {
     editingIndex = null;
     submitBtn.textContent = "Add Run";
     cancelEditBtn.style.display = "none";
+
+    // Remove highlight from all runs
+    document.querySelectorAll(".run-entry").forEach(el => el.classList.remove("editing"));
+
+    // Show all delete buttons again
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.style.display = "inline"; 
+});
+
 });
 
 deleteButton.addEventListener("click", function() {
@@ -246,6 +260,11 @@ function editRun(index) {
     document.querySelectorAll(".run-entry").forEach((el, i) => {
         el.classList.toggle("editing", i === index);
     });
+
+    // Hide all delete buttons
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.style.display = "none";
+});
 }
 
 
