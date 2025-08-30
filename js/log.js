@@ -64,6 +64,7 @@ form.addEventListener("submit", function(event) {
     // Show all delete buttons again
     document.querySelectorAll(".delete-btn").forEach(btn => {
         btn.style.display = "inline"; 
+    });
 
     currentSort();
 
