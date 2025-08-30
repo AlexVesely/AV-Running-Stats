@@ -34,7 +34,6 @@ const sortPaceDButton = document.getElementById("sortPaceD");
 window.addEventListener("DOMContentLoaded", loadRuns);
 
 document.addEventListener("DOMContentLoaded", () => {
-    sortByDate(true); // ascending by default
     setActiveSortButton("sortDateC");
 });
 
@@ -267,6 +266,7 @@ function loadRuns() {
         runs = parsedRuns.map(r => new Run(r.date, r.distance, r.hours, r.minutes, r.seconds)); // Cheeky declarative programming
     }
 
+    currentSort();
     displayRuns();
 }
 
