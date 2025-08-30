@@ -45,14 +45,15 @@ form.addEventListener("submit", function(event) {
     // Get values from inputs
     const date = document.getElementById("runDate").value;
     const distance = document.getElementById("distance").value;
-    const hours = parseInt(document.getElementById("hours").value) || 0; // If input is empty use 0, but atm its a required field? Return to this
-    const minutes = parseInt(document.getElementById("minutes").value) || 0;
-    const seconds = parseInt(document.getElementById("seconds").value) || 0;
+    const hours = parseInt(document.getElementById("hours").value);
+    const minutes = parseInt(document.getElementById("minutes").value);
+    const seconds = parseInt(document.getElementById("seconds").value);
 
     if (editingIndex === null) {
         // Add new run
         let run = new Run(date, distance, hours, minutes, seconds);
         runs.push(run);
+        currentSort();
     } else {
         // Edit existing run
         runs[editingIndex] = new Run(date, distance, hours, minutes, seconds);
