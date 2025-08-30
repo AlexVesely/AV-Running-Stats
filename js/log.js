@@ -229,6 +229,8 @@ function deleteRun(index) {
 }
 
 function editRun(index) {
+    editingIndex = index; // Specify which index of runs is currently being edited
+
     const run = runs[index];
 
     document.getElementById("runDate").value = run.date;
@@ -237,9 +239,13 @@ function editRun(index) {
     document.getElementById("minutes").value = run.minutes;
     document.getElementById("seconds").value = run.seconds;
 
-    editingIndex = index;
     submitBtn.textContent = "Save Run";
     cancelEditBtn.style.display = "inline"; // show cancel button
+
+    // Highlight current run being edited
+    document.querySelectorAll(".run-entry").forEach((el, i) => {
+        el.classList.toggle("editing", i === index);
+    });
 }
 
 

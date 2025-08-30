@@ -83,3 +83,7 @@ input[type=number] {
     background-color: gray;
     color: black;
 }
+
+.run-entry.editing {
+    color: darkcyan;
+}
