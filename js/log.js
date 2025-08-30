@@ -29,6 +29,11 @@ const sortPaceDButton = document.getElementById("sortPaceD");
 // DOMContentLoaded is an event that fires when HTML has loaded, so it is now safe to load from localStorage
 window.addEventListener("DOMContentLoaded", loadRuns);
 
+document.addEventListener("DOMContentLoaded", () => {
+    sortByDate(true); // ascending by default
+    setActiveSortButton("sortDateC");
+});
+
 // Listen for form submission
 form.addEventListener("submit", function(event) {
     event.preventDefault(); // stop page reload
