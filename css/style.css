@@ -71,3 +71,10 @@ input[type=number] {
     cursor: pointer;
     margin-left: 20px; /* puts 20px space between text and button */
 }
+
+.edit-btn {
+    border: none;
+    padding: 2px 6px;
+    cursor: pointer;
+    margin-left: 20px; /* puts 20px space between text and button */
+}

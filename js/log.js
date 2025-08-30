@@ -6,7 +6,9 @@ let runs = [];
 // Select form and list container
 // document.getElementById(...) looks into the HTML and grabs the element with that ID.
 const form = document.getElementById("runForm"); // The form
+
 const runsList = document.getElementById("runsList"); // The list displaying runs
+
 const deleteButton = document.getElementById("deleteAllButton");
 
 const sortDateCButton = document.getElementById("sortDateC");
@@ -154,8 +156,15 @@ function createRunEntry(run, index) {
     deleteBtn.classList.add("delete-btn"); // add CSS class to deleteBtn
     deleteBtn.addEventListener("click", () => deleteRun(index));
 
+    // Edit button
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "✎";
+    editBtn.classList.add("edit-btn");
+    editBtn.addEventListener("click", () => editRun(index));
+
     // Add both to the container
     runEntry.appendChild(runText);
+    runEntry.appendChild(editBtn);
     runEntry.appendChild(deleteBtn);
 
     return runEntry; // Return the fully built div so it can be added to runsList
