@@ -78,3 +78,8 @@ input[type=number] {
     cursor: pointer;
     margin-left: 20px; /* puts 20px space between text and button */
 }
+
+.sort-btn.active {
+    background-color: gray;
+    color: black;
+}

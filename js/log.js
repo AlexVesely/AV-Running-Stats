@@ -7,10 +7,8 @@ let runs = [];
 // If this is an int, we're editing the run at that index
 let editingIndex = null;
 
-// Select form and list container
 // document.getElementById(...) looks into the HTML and grabs the element with that ID.
 const form = document.getElementById("runForm"); // The form
-
 const runsList = document.getElementById("runsList"); // The list displaying runs
 
 const deleteButton = document.getElementById("deleteAllButton");
@@ -90,6 +88,9 @@ sortDateCButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortDateC");
 });
 
 sortDateNCButton.addEventListener("click", () => {
@@ -98,6 +99,9 @@ sortDateNCButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortDateNC");
 });
 
 sortDistanceAButton.addEventListener("click", () => {
@@ -106,6 +110,9 @@ sortDistanceAButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortDistanceA");
 });
 
 sortDistanceDButton.addEventListener("click", () => {
@@ -114,6 +121,9 @@ sortDistanceDButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortDistanceD");
 });
 
 sortTimeAButton.addEventListener("click", () => {
@@ -122,6 +132,9 @@ sortTimeAButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortTimeA");
 });
 
 sortTimeDButton.addEventListener("click", () => {
@@ -130,6 +143,9 @@ sortTimeDButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortTimeD");
 });
 
 sortPaceAButton.addEventListener("click", () => {
@@ -138,6 +154,9 @@ sortPaceAButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortPaceA");
 });
 
 sortPaceDButton.addEventListener("click", () => {
@@ -146,6 +165,9 @@ sortPaceDButton.addEventListener("click", () => {
     
     // Re-render the runs
     displayRuns();
+
+    // Grey out currently used sort button
+    setActiveSortButton("sortPaceD");
 });
 
 // Display all runs
@@ -281,4 +303,13 @@ function sortByPace(ascending = true) {
     } else {
         runs.sort((a, b) => (b.getTotalSeconds() / b.distance) - (a.getTotalSeconds() / a.distance));
     }
+}
+
+function setActiveSortButton(buttonId) {
+    // Remove 'active' class from all sort buttons
+    document.querySelectorAll(".sort-btn").forEach(btn => btn.classList.remove("active"));
+
+    // Add 'active' to the clicked one
+    const btn = document.getElementById(buttonId);
+    if (btn) btn.classList.add("active");
 }
