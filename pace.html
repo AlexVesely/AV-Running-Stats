@@ -20,7 +20,32 @@
 
     <br>
 
-    <p>Pace Calc</p>
+    <div id="paceExplain">
+    Fill in two fields below to automatically calculate the third!
+    </div>
+
+    <br>
+
+    <form id="paceForm">
+        <label>
+            Distance (km):
+            <input type="number" id="distance" step="0.01">
+        </label>
+
+        <label>
+            Time (hh:mm:ss):
+            <input type="text" id="time" placeholder="hh:mm:ss">
+        </label>
+
+        <label>
+            Pace (min/km):
+            <input type="text" id="pace" placeholder="mm:ss">
+        </label>
+    </form>
+
+    <br>
+
+    <div id="CalcPace">XX km in XX:XX:XX is a pace of XX min/km</div>
 
 
     <script type="module" src="js/pace.js"></script>
