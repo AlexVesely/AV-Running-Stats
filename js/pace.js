@@ -9,13 +9,14 @@ calculateBtn.addEventListener("click", () => {
 
     if (distance == "" && time == "" && pace == "") {
         resultText.textContent = "No fields fill in, please fill in 2 of the 3 fields ";
+        return;
     } else if ((distance == "" && time == "") || (time == "" && pace == "") || (distance == "" && pace == "")) {
         resultText.textContent = "Only 1 field filled in, please fill in 2 of the 3 fields";
+        return;
     } else if (distance != "" && time != "" && pace != "") {
         resultText.textContent = "All 3 fields filled in, please fill in only 2 of the 3 fields"
+        return;
     }
-
-    
 
     // Validation for pace: formats like S, SS, M:SS, MM:SS
     
@@ -44,10 +45,84 @@ calculateBtn.addEventListener("click", () => {
         return;
     }
 
-    
-    resultText.textContent = "Valid input. Ready to calculate!";
+    if (distance == "") {
+        calcDistance(time, pace);
+    } else if (time == "") {
+        calcTime(distance, pace);
+    } else {
+        calcPace(distance, time);
+    }
 });
 
+// Convert time string into total seconds
+function timeToSeconds(timeStr) {
+    const parts = timeStr.split(":").map(Number); // split by ":" and convert to numbers
+    if (parts.length === 3) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    } else if (parts.length === 2) {
+        return parts[0] * 60 + parts[1];
+    } else if (parts.length === 1) {
+        return parts[0];
+    }
+    return 0;
+}
 
+// Convert seconds into "HH:MM:SS" or "MM:SS" format
+function secondsToTime(seconds) {
+    let hours = Math.floor(seconds / 3600);
+    let minutes = Math.floor((seconds % 3600) / 60);
+    let secs = Math.round(seconds % 60);
 
+    // Make 2-digit strings for minutes and seconds
 
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    } 
+
+    if (secs < 10) {
+        secs = "0" + secs;
+    }
+
+    if (hours > 0) {
+        return hours + ":" + minutes + ":" + secs;
+    } else {
+        return minutes + ":" + secs;
+    }
+}
+
+// Convert pace string "MM:SS" to seconds per km
+function paceToSeconds(paceStr) {
+    const parts = paceStr.split(":").map(Number);
+    if (parts.length === 2) {
+        return parts[0] * 60 + parts[1];
+    } else {
+        return parts[0]; // just minutes
+    }
+}
+
+function calcDistance(timeStr, paceStr) {
+    const timeSec = timeToSeconds(timeStr);
+    const paceSec = paceToSeconds(paceStr);
+    const distance = timeSec / paceSec;
+    
+    document.getElementById("distance").value = distance.toFixed(2); // fill distance input
+    resultText.textContent = `${distance.toFixed(2)} km in ${timeStr} with a pace of ${paceStr} / km`;
+}
+
+function calcTime(distance, paceStr) {
+    const paceSec = paceToSeconds(paceStr);
+    const totalSeconds = distance * paceSec;
+    document.getElementById("time").value = secondsToTime(totalSeconds); // fill time input
+    resultText.textContent = `${distance} km in ${secondsToTime(totalSeconds)} with a pace of ${paceStr} / km`;
+}
+
+function calcPace(distance, timeStr) {
+    const timeSec = timeToSeconds(timeStr);
+    const paceSec = timeSec / distance;
+    const minutes = Math.floor(paceSec / 60);
+    const seconds = Math.round(paceSec % 60);
+
+    const paceStr = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    document.getElementById("pace").value = paceStr; // fill pace input
+    resultText.textContent = `${distance} km in ${timeStr} with a pace of ${paceStr} / km`;
+}
