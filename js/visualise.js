@@ -30,15 +30,15 @@ function setupDistanceChart() {
     const canvasContext = document.getElementById("barChart").getContext("2d");
 
     // Define the labels that go on the X-axis (Currently Placeholders)
-    const xAxisLabels = ["Week 1", "Week 2", "Week 3", "Week 4"];
+    const xAxisLabels = generateXAxisLabels("01-06-2023","01-01-2024","month");
 
-    // Define the numbers that go on the Y-axis (Right now placeholders)
+    // Define the numbers that go on the Y-axis (Currently Placeholders)
     const yAxisValues = [10, 0, 7, 20];
 
     // Define one dataset
     const dataset = {
         data: yAxisValues,      // Y values
-        backgroundColor: "rgba(75, 192, 192, 0.6)" // Color of the bars
+        backgroundColor: "aqua" // Color of the bars
     };
 
     // Define the full chart data (labels + datasets)
@@ -79,3 +79,36 @@ function setupDistanceChart() {
         options: chartOptions
     });
 }
+
+function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
+    // Convert strings to Date objects
+    const start = parseDMY(startDateStr);
+    const end = parseDMY(endDateStr);
+
+    let cur = start;
+
+    let labels = [];
+
+    if (groupBy === "week") {
+        while (cur <= end) {
+            labels.push(cur.toLocaleDateString("en-GB")); //  We need the "en-GB" so it returns in format DD-MM-YYYY
+            cur.setDate(cur.getDate() + 7); // jump one week
+        }
+    } else if (groupBy === "month") {
+        cur.setDate(1);
+        while (cur <= end) {
+            labels.push(cur.toLocaleString("default", { month: "short", year: "numeric" }));
+            cur.setMonth(cur.getMonth() + 1);
+        }
+    }
+
+    return labels;
+}
+
+function parseDMY(str) {
+    const [day, month, year] = str.split("-").map(Number);
+    // MONTH IS ZERO BASED!!! January is 0, December is 11
+    return new Date(year, month - 1, day);
+}
+
+
