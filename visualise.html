@@ -20,7 +20,28 @@
 
     <br>
 
-    <p>Run Visualisations</p>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate">
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate">
+
+    <label for="groupBy">Group by:</label>
+    <select id="groupBy">
+        <option value="week">Week</option>
+        <option value="month">Month</option>
+    </select>
+
+    <label for="yAxisType">Y-Axis:</label>
+    <select id="yAxisType">
+        <option value="count">Number of Runs</option>
+        <option value="distance">Total Distance (km)</option>
+    </select>
+
+<button id="updateChart">Update Chart</button>
+
+<!-- Chart canvas -->
+<canvas id="barChart"></canvas>
 
     <script type="module" src="js/visualise.js"></script>
 </body>
