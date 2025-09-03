@@ -1,10 +1,10 @@
 class Run {
     constructor(date, distance, hours, minutes, seconds) {
         this.date = date;
-        this.distance = distance;
-        this.hours = hours;
-        this.minutes = minutes;
-        this.seconds = seconds;
+        this.distance = Number(distance);
+        this.hours = Number(hours);
+        this.minutes = Number(minutes);
+        this.seconds = Number(seconds);
     }
 
     getTotalSeconds() {

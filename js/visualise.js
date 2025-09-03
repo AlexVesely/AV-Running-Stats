@@ -30,10 +30,10 @@ function setupDistanceChart() {
     const canvasContext = document.getElementById("barChart").getContext("2d");
 
     // Define the labels that go on the X-axis (Currently Placeholders)
-    const xAxisLabels = generateXAxisLabels("01-06-2023","01-01-2024","month");
+    const xAxisLabels = generateXAxisLabels("01-09-2025","01-10-2025","month");
 
     // Define the numbers that go on the Y-axis (Currently Placeholders)
-    const yAxisValues = [10, 0, 7, 20];
+    const yAxisValues = generateYAxisLabels("01-09-2025","01-10-2025","month","count");
 
     // Define one dataset
     const dataset = {
@@ -87,7 +87,7 @@ function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
 
     let cur = start;
 
-    let labels = [];
+    const labels = [];
 
     if (groupBy === "week") {
         while (cur <= end) {
@@ -111,4 +111,45 @@ function parseDMY(str) {
     return new Date(year, month - 1, day);
 }
 
+function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
+    // Convert strings to Date objects
+    const start = parseDMY(startDateStr);
+    const end = parseDMY(endDateStr);
 
+    let cur = start;
+
+    const values = [];
+
+    // Loop until the cur passes the end date
+    // For each week/month find all runs that lie in that period and add the total distances / counts
+    while (cur <= end) {
+        let next; // End for this group
+        if (groupBy === "week") {
+            next = new Date(cur);
+            next.setDate(cur.getDate() + 7); // Set end of this group as cur + 7 days
+        } else if (groupBy === "month") {
+            next = new Date(cur.getFullYear(), cur.getMonth() + 1, 1); // Set end of this group as the 1st of the next month after cur
+        }
+
+        // Go through all runs and remove any that don't lie within [cur, next)
+        const runsInPeriod = runs.filter(run => {
+            const runDate = new Date(run.date); // Parse run data string into a Date
+            return runDate >= cur && runDate < next;
+        });
+
+        if (yAxisType === "count") {
+            values.push(runsInPeriod.length); // Push number of runs in this period
+        } else if (yAxisType === "distance") {
+            let totalDistance = 0;
+            for (let i = 0; i < runsInPeriod.length; i++) { // total the distances in this time period
+                totalDistance += runsInPeriod[i].distance;
+            }
+            values.push(totalDistance);
+        }
+
+        // step forward
+        cur = next;
+    }
+
+    return values;
+}
