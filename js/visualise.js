@@ -4,13 +4,30 @@ import Run from "./Run.js";
 let runs = [];
 let chart;
 
+const chartForm = document.getElementById("chartForm");
+
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
 // localStorage stores key-value pairs for us
 // DOMContentLoaded is an event that fires when HTML has loaded, so it is now safe to load from localStorage
 window.addEventListener("DOMContentLoaded", () => {
     loadRuns();
-    setupDistanceChart();
+    setupChart();
+});
+
+chartForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // stop page reload
+
+    const startDate = document.getElementById("startDate").value;
+    console.log(startDate);
+    const endDate = document.getElementById("endDate").value;
+    console.log(endDate);
+    const groupBy = document.getElementById("groupBy").value;
+    console.log(groupBy);
+    const yAxisType = document.getElementById("yAxisType").value;
+    console.log(yAxisType);
+
+    setupChart(startDate, endDate, groupBy, yAxisType);
 });
 
 // Load runs array from localStorage
@@ -25,15 +42,28 @@ function loadRuns() {
     }
 }
 
-function setupDistanceChart() {
+function setupChart(startDate, endDate, groupBy, yAxisType) {
     // Get the 2D drawing context of the <canvas> element
     const canvasContext = document.getElementById("barChart").getContext("2d");
 
+    // Destroy the old chart if it exists
+    if (chart) {
+        chart.destroy();
+    }
+
+    let yTitle;
+
+    if (yAxisType == "distance") {
+        yTitle = "Total Distance (km)";
+    } else if (yAxisType == "count") {
+        yTitle = "Number of runs";
+    }
+
     // Define the labels that go on the X-axis (Currently Placeholders)
-    const xAxisLabels = generateXAxisLabels("01-09-2025","01-10-2025","month");
+    const xAxisLabels = generateXAxisLabels(startDate,endDate,groupBy);
 
     // Define the numbers that go on the Y-axis (Currently Placeholders)
-    const yAxisValues = generateYAxisLabels("01-09-2025","01-10-2025","month","count");
+    const yAxisValues = generateYAxisLabels(startDate,endDate,groupBy,yAxisType);
 
     // Define one dataset
     const dataset = {
@@ -65,14 +95,14 @@ function setupDistanceChart() {
             y: {
                 title: {
                     display: true,
-                    text: "Distance (km)" // Y-axis title
+                    text: yTitle
                 },
                 beginAtZero: true
             }
         }
     };
 
-    // Create the Chart.js chart object
+    // Create the new Chart.js chart object 
     chart = new Chart(canvasContext, {
         type: "bar",
         data: chartData,
@@ -82,10 +112,10 @@ function setupDistanceChart() {
 
 function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
     // Convert strings to Date objects
-    const start = parseDMY(startDateStr);
-    const end = parseDMY(endDateStr);
+    const start = new Date(startDateStr);
+    const end = new Date(endDateStr);
 
-    let cur = start;
+    let cur = new Date(start);
 
     const labels = [];
 
@@ -105,18 +135,12 @@ function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
     return labels;
 }
 
-function parseDMY(str) {
-    const [day, month, year] = str.split("-").map(Number);
-    // MONTH IS ZERO BASED!!! January is 0, December is 11
-    return new Date(year, month - 1, day);
-}
-
 function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
     // Convert strings to Date objects
-    const start = parseDMY(startDateStr);
-    const end = parseDMY(endDateStr);
+    const start = new Date(startDateStr);
+    const end = new Date(endDateStr);
 
-    let cur = start;
+    let cur = new Date(start);
 
     const values = [];
 
