@@ -12,20 +12,18 @@ const chartForm = document.getElementById("chartForm");
 // DOMContentLoaded is an event that fires when HTML has loaded, so it is now safe to load from localStorage
 window.addEventListener("DOMContentLoaded", () => {
     loadRuns();
-    setupChart();
+    
+    // Set up chart of todays month
+    setupChart(firstDayOfTodaysMonth(),lastDayOfTodaysMonth(),"week","distance");
 });
 
 chartForm.addEventListener("submit", function(event) {
     event.preventDefault(); // stop page reload
 
     const startDate = document.getElementById("startDate").value;
-    console.log(startDate);
     const endDate = document.getElementById("endDate").value;
-    console.log(endDate);
     const groupBy = document.getElementById("groupBy").value;
-    console.log(groupBy);
     const yAxisType = document.getElementById("yAxisType").value;
-    console.log(yAxisType);
 
     setupChart(startDate, endDate, groupBy, yAxisType);
 });
@@ -40,6 +38,29 @@ function loadRuns() {
         // Recreate them as Run instances
         runs = parsedRuns.map(r => new Run(r.date, r.distance, r.hours, r.minutes, r.seconds)); // Cheeky declarative programming
     }
+}
+
+function firstDayOfTodaysMonth() {
+    const today = new Date(); // This creates a Date object of today's date!
+    
+    const todaysYear = today.getFullYear();
+    const todaysMonth = String(today.getMonth() + 1).padStart(2, "0"); // add 1 because months are 0-indexed
+    
+    const firstDay = `${todaysYear}-${todaysMonth}-01`;
+
+    return firstDay;
+}
+
+function lastDayOfTodaysMonth() {
+    const today = new Date(); // This creates a Date object of today's date!
+    const lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    const todaysYear = today.getFullYear();
+    const todaysMonth = String(today.getMonth() + 1).padStart(2, "0"); // add 1 because months are 0-indexed
+
+    const lastDay = `${todaysYear}-${todaysMonth}-${String(lastDate.getDate()).padStart(2,"0")}`; 
+
+    return lastDay;
 }
 
 function setupChart(startDate, endDate, groupBy, yAxisType) {
