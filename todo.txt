@@ -25,3 +25,5 @@
     Deploy to GitHub Pages, Netlify, or Vercel.
 
 -Write a LinkedIn post showcasing it (screenshots + live link).
+
+- Connect to Strava API ? A seperate project
