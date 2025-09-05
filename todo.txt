@@ -1,3 +1,4 @@
 - Line chart with pace
+- Add metre option and mm:ss / 100m to pace calculator
 - Add cycling and swimming
 - Add CSS Styling all over
