@@ -1,4 +1,27 @@
-- Line chart with pace
-- Add metre option and mm:ss / 100m to pace calculator
-- Add cycling and swimming
-- Add CSS Styling all over
+-Update Pace Page
+    Add mm:ss/100m pace option for swimming.
+    Add km/m toggle
+
+
+-Extend Log Runs Page
+    Add ability to log swims and cycles alongside runs.
+    Add filter option (show only runs, only swims, only cycles, or 2/3 or all).
+
+-Enhance Bar Chart
+    Add option to display swims and cycles with same groupings (week/month).
+    Update Y-axis types appropriately for each activity (e.g., distance for swims in meters, cycling in km).
+
+-Add Line Chart
+    Create a line chart for pace across time (for each activity type).
+
+-More Data Visualisations
+    Explore interesting charts (e.g., distribution of distances, total training volume, comparison of activity types).
+
+-CSS Styling All Over
+
+-Home Page
+
+-Make It a Real Website
+    Deploy to GitHub Pages, Netlify, or Vercel.
+
+-Write a LinkedIn post showcasing it (screenshots + live link).
