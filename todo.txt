@@ -1,0 +1,3 @@
+- Line chart with pace
+- Add cycling and swimming
+- Add CSS Styling all over

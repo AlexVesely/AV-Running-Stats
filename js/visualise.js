@@ -13,8 +13,8 @@ const chartForm = document.getElementById("chartForm");
 window.addEventListener("DOMContentLoaded", () => {
     loadRuns();
     
-    // Set up chart of todays month
-    setupChart(firstDayOfTodaysMonth(),lastDayOfTodaysMonth(),"week","distance");
+    // Set up chart of todays month when page is loaded
+    updateChart(firstDayOfTodaysMonth(),lastDayOfTodaysMonth(),"week","distance");
 });
 
 chartForm.addEventListener("submit", function(event) {
@@ -25,7 +25,7 @@ chartForm.addEventListener("submit", function(event) {
     const groupBy = document.getElementById("groupBy").value;
     const yAxisType = document.getElementById("yAxisType").value;
 
-    setupChart(startDate, endDate, groupBy, yAxisType);
+    updateChart(startDate, endDate, groupBy, yAxisType);
 });
 
 // Load runs array from localStorage
@@ -53,7 +53,7 @@ function firstDayOfTodaysMonth() {
 
 function lastDayOfTodaysMonth() {
     const today = new Date(); // This creates a Date object of today's date!
-    const lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 0th day of a month is the last day of a month
 
     const todaysYear = today.getFullYear();
     const todaysMonth = String(today.getMonth() + 1).padStart(2, "0"); // add 1 because months are 0-indexed
@@ -63,7 +63,7 @@ function lastDayOfTodaysMonth() {
     return lastDay;
 }
 
-function setupChart(startDate, endDate, groupBy, yAxisType) {
+function updateChart(startDate, endDate, groupBy, yAxisType) {
     // Get the 2D drawing context of the <canvas> element
     const canvasContext = document.getElementById("barChart").getContext("2d");
 
@@ -72,8 +72,8 @@ function setupChart(startDate, endDate, groupBy, yAxisType) {
         chart.destroy();
     }
 
-    let yTitle;
-
+    let yTitle
+    // What to write on axis label?
     if (yAxisType == "distance") {
         yTitle = "Total Distance (km)";
     } else if (yAxisType == "count") {
@@ -86,7 +86,7 @@ function setupChart(startDate, endDate, groupBy, yAxisType) {
     // Define the numbers that go on the Y-axis (Currently Placeholders)
     const yAxisValues = generateYAxisLabels(startDate,endDate,groupBy,yAxisType);
 
-    // Define one dataset
+    // Define dataset
     const dataset = {
         data: yAxisValues,      // Y values
         backgroundColor: "aqua" // Color of the bars
@@ -116,7 +116,7 @@ function setupChart(startDate, endDate, groupBy, yAxisType) {
             y: {
                 title: {
                     display: true,
-                    text: yTitle
+                    text: yTitle // Y-axis title
                 },
                 beginAtZero: true
             }
@@ -140,12 +140,12 @@ function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
 
     const labels = [];
 
-    if (groupBy === "week") {
+    if (groupBy == "week") {
         while (cur <= end) {
             labels.push(cur.toLocaleDateString("en-GB")); //  We need the "en-GB" so it returns in format DD-MM-YYYY
             cur.setDate(cur.getDate() + 7); // jump one week
         }
-    } else if (groupBy === "month") {
+    } else if (groupBy == "month") {
         cur.setDate(1);
         while (cur <= end) {
             labels.push(cur.toLocaleString("default", { month: "short", year: "numeric" }));
@@ -166,13 +166,13 @@ function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
     const values = [];
 
     // Loop until the cur passes the end date
-    // For each week/month find all runs that lie in that period and add the total distances / counts
+    // For each week/month find all runs that lie in that period and add the total distances/counts
     while (cur <= end) {
         let next; // End for this group
-        if (groupBy === "week") {
+        if (groupBy == "week") {
             next = new Date(cur);
             next.setDate(cur.getDate() + 7); // Set end of this group as cur + 7 days
-        } else if (groupBy === "month") {
+        } else if (groupBy == "month") {
             next = new Date(cur.getFullYear(), cur.getMonth() + 1, 1); // Set end of this group as the 1st of the next month after cur
         }
 
@@ -182,9 +182,9 @@ function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
             return runDate >= cur && runDate < next;
         });
 
-        if (yAxisType === "count") {
+        if (yAxisType == "count") {
             values.push(runsInPeriod.length); // Push number of runs in this period
-        } else if (yAxisType === "distance") {
+        } else if (yAxisType == "distance") {
             let totalDistance = 0;
             for (let i = 0; i < runsInPeriod.length; i++) { // total the distances in this time period
                 totalDistance += runsInPeriod[i].distance;
