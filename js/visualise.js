@@ -3,6 +3,7 @@ import Run from "./Run.js";
 // Array to hold all runs
 let runs = [];
 let chart;
+let lineChart;
 
 const chartForm = document.getElementById("chartForm");
 
@@ -15,6 +16,8 @@ window.addEventListener("DOMContentLoaded", () => {
     
     // Set up chart of todays month when page is loaded
     updateChart(firstDayOfTodaysMonth(),lastDayOfTodaysMonth(),"week","distance");
+
+    updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), 50);
 });
 
 chartForm.addEventListener("submit", function(event) {
@@ -80,10 +83,10 @@ function updateChart(startDate, endDate, groupBy, yAxisType) {
         yTitle = "Number of runs";
     }
 
-    // Define the labels that go on the X-axis (Currently Placeholders)
+    // Define the labels that go on the X-axis
     const xAxisLabels = generateXAxisLabels(startDate,endDate,groupBy);
 
-    // Define the numbers that go on the Y-axis (Currently Placeholders)
+    // Define the numbers that go on the Y-axis
     const yAxisValues = generateYAxisLabels(startDate,endDate,groupBy,yAxisType);
 
     // Define dataset
@@ -139,8 +142,12 @@ function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
     let cur = new Date(start);
 
     const labels = [];
-
-    if (groupBy == "week") {
+    if (groupBy === "day") {
+        while (cur <= end) {
+            labels.push(cur.toLocaleDateString("en-GB")); // DD/MM/YYYY
+            cur.setDate(cur.getDate() + 1); // jump 1 day
+        }
+    } else if (groupBy == "week") {
         while (cur <= end) {
             labels.push(cur.toLocaleDateString("en-GB")); //  We need the "en-GB" so it returns in format DD-MM-YYYY
             cur.setDate(cur.getDate() + 7); // jump one week
@@ -197,4 +204,83 @@ function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
     }
 
     return values;
+}
+
+
+
+function updateLineChart(startDate, endDate, goalDistance) {
+    // Get the 2D drawing context of the <canvas> element
+    const ctx = document.getElementById("lineChart").getContext("2d");
+
+    // Destroy the old chart if it exists
+    if (lineChart) {
+        chart.destroy();
+    }
+
+    // Define the labels that go on the X-axis
+    const xAxisLabels = generateXAxisLabels(startDate, endDate, "day");
+
+    // Define the numbers that go on the Y-axis (Currently Placeholders)
+    const yAxisValues = [1,2,3,5,9,10,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,22,22,23,23,23,25,35,35,48]
+
+    // Dataset 1:
+    const dataset = {
+        label: "Actual",
+        data: yAxisValues,
+        borderColor: "aqua",
+        backgroundColor: "black",
+        fill: false,
+        tension: 0 // How smooth should the curve be? I think 0 as I don't want the curve to dip
+    };
+
+    // Dataset 2:
+    const goalDataset = {
+        label: "Goal",
+        data: [
+            { x: xAxisLabels[0], y: 0 },                  // start at origin
+            { x: xAxisLabels[xAxisLabels.length - 1], y: goalDistance } // end at goal
+        ],
+        borderColor: "red",
+        borderDash: [5, 5], // make it a dashed line
+        fill: false,
+        tension: 0
+    };
+
+    // Define the full chart data (labels + datasets)
+    const chartData = {
+        labels: xAxisLabels,
+        datasets: [dataset, goalDataset]
+    };
+
+    // Define options for the chart (titles, scales, etc.)
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Period"
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: "Total Distance (km)"
+                },
+                beginAtZero: true
+            }
+        }
+    };
+
+    // Create the new Chart.js lineChart object 
+    lineChart = new Chart(ctx, {
+        type: "line",
+        data: chartData,
+        options: chartOptions
+    });
 }
