@@ -45,6 +45,28 @@
     <!-- Bar Chart canvas -->
     <canvas id="barChart"></canvas>
 
+    <form id="lineChartForm">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="lineChartStartDate">
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="lineChartEndDate">
+
+        <label for="groupBy">Group by:</label>
+        <select id="lineChartGroupBy">
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+        </select>
+
+        <label for="yAxisType">Y-Axis:</label>
+        <select id="lineChartyAxisType">
+            <option value="distance">Total Distance (km)</option>
+            <option value="count">Number of Runs</option>
+        </select>
+
+        <button type="submit">Update Chart</button>
+    </form>
+
     <!-- Line Chart canvas -->
     <canvas id="lineChart"></canvas>
 
