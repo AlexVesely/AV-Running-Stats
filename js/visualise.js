@@ -6,6 +6,7 @@ let chart;
 let lineChart;
 
 const barChartForm = document.getElementById("barChartForm");
+const lineChartForm = document.getElementById("lineChartForm");
 
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
@@ -17,18 +18,34 @@ window.addEventListener("DOMContentLoaded", () => {
     // Set up chart of todays month when page is loaded
     updateBarChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "week", "distance");
 
-    updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), 50);
+    updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance", 50);
 });
 
 barChartForm.addEventListener("submit", function(event) {
     event.preventDefault(); // stop page reload
 
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    const groupBy = document.getElementById("groupBy").value;
-    const yAxisType = document.getElementById("yAxisType").value;
+    const startDate = document.getElementById("barChartStartDate").value;
+    const endDate = document.getElementById("barChartEndDate").value;
+    const groupBy = document.getElementById("barChartGroupBy").value;
+    const yAxisType = document.getElementById("barChartYAxisType").value;
+
+    console.log(yAxisType);
 
     updateBarChart(startDate, endDate, groupBy, yAxisType);
+});
+
+lineChartForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // stop page reload
+
+    const startDate = document.getElementById("lineChartStartDate").value;
+    const endDate = document.getElementById("lineChartEndDate").value;
+    const groupBy = document.getElementById("lineChartGroupBy").value;
+    const yAxisType = document.getElementById("lineChartYAxisType").value;
+    const targetDistance = document.getElementById("targetDistance").value;
+
+    console.log(targetDistance);
+
+    updateLineChart(startDate, endDate, groupBy, yAxisType, targetDistance);
 });
 
 // Load runs array from localStorage
@@ -211,7 +228,7 @@ function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
 
 
 
-function updateLineChart(startDate, endDate, goalDistance) {
+function updateLineChart(startDate, endDate, groupBy, yAxisType, goalDistance) {
     // Get the 2D drawing context of the <canvas> element
     const ctx = document.getElementById("lineChart").getContext("2d");
 
@@ -221,7 +238,7 @@ function updateLineChart(startDate, endDate, goalDistance) {
     }
 
     // Define the labels that go on the X-axis
-    const xAxisLabels = generateXAxisLabels(startDate, endDate, "day");
+    const xAxisLabels = generateXAxisLabels(startDate, endDate, groupBy);
 
     // Define the numbers that go on the Y-axis (Currently Placeholders)
     const yAxisValues = [1,2,3,5,9,10,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,22,22,23,23,23,25,35,35,48]
