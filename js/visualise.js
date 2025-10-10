@@ -2,7 +2,7 @@ import Run from "./Run.js";
 
 // Array to hold all runs
 let runs = [];
-let chart;
+let barChart;
 let lineChart;
 
 const barChartForm = document.getElementById("barChartForm");
@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // Set up chart of todays month when page is loaded
     updateBarChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "week", "distance");
 
-    updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance", 50);
+    updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance", 40);
 });
 
 barChartForm.addEventListener("submit", function(event) {
@@ -28,8 +28,6 @@ barChartForm.addEventListener("submit", function(event) {
     const endDate = document.getElementById("barChartEndDate").value;
     const groupBy = document.getElementById("barChartGroupBy").value;
     const yAxisType = document.getElementById("barChartYAxisType").value;
-
-    console.log(yAxisType);
 
     updateBarChart(startDate, endDate, groupBy, yAxisType);
 });
@@ -42,8 +40,6 @@ lineChartForm.addEventListener("submit", function(event) {
     const groupBy = document.getElementById("lineChartGroupBy").value;
     const yAxisType = document.getElementById("lineChartYAxisType").value;
     const targetDistance = document.getElementById("targetDistance").value;
-
-    console.log(targetDistance);
 
     updateLineChart(startDate, endDate, groupBy, yAxisType, targetDistance);
 });
@@ -88,8 +84,8 @@ function updateBarChart(startDate, endDate, groupBy, yAxisType) {
     const canvasContext = document.getElementById("barChart").getContext("2d");
 
     // Destroy the old chart if it exists
-    if (chart) {
-        chart.destroy();
+    if (barChart) {
+        barChart.destroy();
     }
 
     let yTitle
@@ -104,7 +100,7 @@ function updateBarChart(startDate, endDate, groupBy, yAxisType) {
     const xAxisLabels = generateXAxisLabels(startDate,endDate,groupBy);
 
     // Define the numbers that go on the Y-axis
-    const yAxisValues = generateYAxisLabels(startDate,endDate,groupBy,yAxisType);
+    const yAxisValues = generateTotalYAxisLabels(startDate,endDate,groupBy,yAxisType);
 
     // Define dataset
     const dataset = {
@@ -144,7 +140,7 @@ function updateBarChart(startDate, endDate, groupBy, yAxisType) {
     };
 
     // Create the new Chart.js chart object 
-    chart = new Chart(canvasContext, {
+    barChart = new Chart(canvasContext, {
         type: "bar",
         data: chartData,
         options: chartOptions
@@ -180,7 +176,7 @@ function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
     return labels;
 }
 
-function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
+function generateTotalYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
     // Convert strings to Date objects
     const start = new Date(startDateStr);
     const end = new Date(endDateStr);
@@ -226,7 +222,56 @@ function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
     return values;
 }
 
+function generateCumulativeYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
+    // Convert strings to Date objects
+    const start = new Date(startDateStr);
+    const end = new Date(endDateStr);
 
+    let cur = new Date(start);
+
+    const values = [];
+    let runningTotal = 0;
+
+    // Loop until the cur passes the end date
+    // For each week/month find all runs that lie in that period and add the total distances/counts
+    while (cur <= end) {
+        let next; // End for this group
+        if (groupBy == "day") {
+            next = new Date(cur);
+            next.setDate(cur.getDate() + 1);
+        } else if (groupBy == "week") {
+            next = new Date(cur);
+            next.setDate(cur.getDate() + 7); // Set end of this group as cur + 7 days
+        } else if (groupBy == "month") {
+            next = new Date(cur.getFullYear(), cur.getMonth() + 1, 1); // Set end of this group as the 1st of the next month after cur
+        }
+
+        // Go through all runs and remove any that don't lie within [cur, next)
+        const runsInPeriod = runs.filter(run => {
+            const runDate = new Date(run.date); // Parse run data string into a Date
+            return runDate >= cur && runDate < next;
+        });
+
+        // Calculate total for this period
+        let periodValue = 0;
+        if (yAxisType === "count") {
+            periodValue = runsInPeriod.length;
+        } else if (yAxisType === "distance") {
+            for (let i = 0; i < runsInPeriod.length; i++) { // total the distances in this time period
+                periodValue += runsInPeriod[i].distance;
+            }
+        }
+
+        // Add to running total and push to array
+        runningTotal += periodValue;
+        values.push(runningTotal);
+
+        // Move to next period
+        cur = next;
+    }
+
+    return values;
+}
 
 function updateLineChart(startDate, endDate, groupBy, yAxisType, goalDistance) {
     // Get the 2D drawing context of the <canvas> element
@@ -234,14 +279,14 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, goalDistance) {
 
     // Destroy the old chart if it exists
     if (lineChart) {
-        chart.destroy();
+        lineChart.destroy();
     }
 
     // Define the labels that go on the X-axis
     const xAxisLabels = generateXAxisLabels(startDate, endDate, groupBy);
 
-    // Define the numbers that go on the Y-axis (Currently Placeholders)
-    const yAxisValues = [1,2,3,5,9,10,20,20,20,20,20,20,20,20,20,21,21,21,21,21,21,22,22,23,23,23,25,35,35,48]
+    // Define the numbers that go on the Y-axis
+    const yAxisValues = generateCumulativeYAxisLabels(startDate,endDate,groupBy,yAxisType);
 
     // Dataset 1:
     const dataset = {
@@ -250,14 +295,14 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, goalDistance) {
         borderColor: "aqua",
         backgroundColor: "black",
         fill: false,
-        tension: 0 // How smooth should the curve be? I think 0 as I don't want the curve to dip
+        tension: 0 // 0 as I don't want the curve to dip
     };
 
     // Dataset 2:
     const goalDataset = {
         label: "Goal",
         data: [
-            { x: xAxisLabels[0], y: 0 },                  // start at origin
+            { x: xAxisLabels[0], y: 0 }, // start at origin
             { x: xAxisLabels[xAxisLabels.length - 1], y: goalDistance } // end at goal
         ],
         borderColor: "red",
