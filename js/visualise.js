@@ -5,7 +5,7 @@ let runs = [];
 let chart;
 let lineChart;
 
-const chartForm = document.getElementById("barChartForm");
+const barChartForm = document.getElementById("barChartForm");
 
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     loadRuns();
     
     // Set up chart of todays month when page is loaded
-    updateChart(firstDayOfTodaysMonth(),lastDayOfTodaysMonth(),"week","distance");
+    updateBarChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "week", "distance");
 
     updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), 50);
 });
@@ -28,7 +28,7 @@ barChartForm.addEventListener("submit", function(event) {
     const groupBy = document.getElementById("groupBy").value;
     const yAxisType = document.getElementById("yAxisType").value;
 
-    updateChart(startDate, endDate, groupBy, yAxisType);
+    updateBarChart(startDate, endDate, groupBy, yAxisType);
 });
 
 // Load runs array from localStorage
@@ -66,7 +66,7 @@ function lastDayOfTodaysMonth() {
     return lastDay;
 }
 
-function updateChart(startDate, endDate, groupBy, yAxisType) {
+function updateBarChart(startDate, endDate, groupBy, yAxisType) {
     // Get the 2D drawing context of the <canvas> element
     const canvasContext = document.getElementById("barChart").getContext("2d");
 
@@ -176,7 +176,10 @@ function generateYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) {
     // For each week/month find all runs that lie in that period and add the total distances/counts
     while (cur <= end) {
         let next; // End for this group
-        if (groupBy == "week") {
+        if (groupBy == "day") {
+            next = new Date(cur);
+            next.setDate(cur.getDate() + 1);
+        } else if (groupBy == "week") {
             next = new Date(cur);
             next.setDate(cur.getDate() + 7); // Set end of this group as cur + 7 days
         } else if (groupBy == "month") {
