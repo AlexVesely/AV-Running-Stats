@@ -5,7 +5,7 @@ let runs = [];
 let chart;
 let lineChart;
 
-const chartForm = document.getElementById("chartForm");
+const chartForm = document.getElementById("barChartForm");
 
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
     updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), 50);
 });
 
-chartForm.addEventListener("submit", function(event) {
+barChartForm.addEventListener("submit", function(event) {
     event.preventDefault(); // stop page reload
 
     const startDate = document.getElementById("startDate").value;
