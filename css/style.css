@@ -45,6 +45,29 @@ h1{
     text-align: center;
 }
 
+
+.distance-input {
+    width: 3em;
+    text-align: center;
+}
+
+.hour-input {
+    width: 5em;
+    text-align: center;
+}
+
+.min-input {
+    width: 3em;
+    text-align: center;
+}
+
+/* Make target input narrower */
+.target-input {
+    width: 3em;
+    text-align: center;
+}
+
+
 /* Remove arrows in number inputs (Chrome, Safari, Edge, Opera) */
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {
