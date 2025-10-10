@@ -8,6 +8,27 @@ let lineChart;
 const barChartForm = document.getElementById("barChartForm");
 const lineChartForm = document.getElementById("lineChartForm");
 
+// These get references to change lavel text depending on target chosen (distance or number of runs)
+const yAxisSelect = document.getElementById("lineChartYAxisType");
+const targetLabel = document.getElementById("targetLabel");
+const targetInput = document.getElementById("target");
+
+// Listen for any change in the dropdown menu
+yAxisSelect.addEventListener("change", function() {
+    // "this.value" means: whatever option is currently selected in the dropdown
+    if (this.value == "count") {
+        targetLabel.textContent = "Target Runs:";
+        targetInput.step = "1";
+        targetInput.value = ""; // clear previous value
+        targetInput.placeholder = "0";
+    } else if (this.value == "distance") {
+        targetLabel.textContent = "Target Distance:";
+        targetInput.step = "0.01";
+        targetInput.value = ""; // clear previous value
+        targetInput.placeholder = "0.00";
+    }
+});
+
 // Load runs from localStorage when the page first opens
 // localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
 // localStorage stores key-value pairs for us
@@ -39,9 +60,9 @@ lineChartForm.addEventListener("submit", function(event) {
     const endDate = document.getElementById("lineChartEndDate").value;
     const groupBy = document.getElementById("lineChartGroupBy").value;
     const yAxisType = document.getElementById("lineChartYAxisType").value;
-    const targetDistance = document.getElementById("targetDistance").value;
+    const target = document.getElementById("target").value;
 
-    updateLineChart(startDate, endDate, groupBy, yAxisType, targetDistance);
+    updateLineChart(startDate, endDate, groupBy, yAxisType, target);
 });
 
 // Load runs array from localStorage
@@ -273,7 +294,7 @@ function generateCumulativeYAxisLabels(startDateStr, endDateStr, groupBy, yAxisT
     return values;
 }
 
-function updateLineChart(startDate, endDate, groupBy, yAxisType, goalDistance) {
+function updateLineChart(startDate, endDate, groupBy, yAxisType, target) {
     // Get the 2D drawing context of the <canvas> element
     const ctx = document.getElementById("lineChart").getContext("2d");
 
@@ -299,22 +320,22 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, goalDistance) {
     };
 
     // Dataset 2:
-    const goalDataset = {
-        label: "Goal",
+    const targetDataset = {
+        label: "Target",
         data: [
             { x: xAxisLabels[0], y: 0 }, // start at origin
-            { x: xAxisLabels[xAxisLabels.length - 1], y: goalDistance } // end at goal
+            { x: xAxisLabels[xAxisLabels.length - 1], y: target } // end at target
         ],
         borderColor: "red",
         borderDash: [5, 5], // make it a dashed line
         fill: false,
         tension: 0
     };
-
+    
     // Define the full chart data (labels + datasets)
     const chartData = {
         labels: xAxisLabels,
-        datasets: [dataset, goalDataset]
+        datasets: [dataset, targetDataset]
     };
 
     // Define options for the chart (titles, scales, etc.)

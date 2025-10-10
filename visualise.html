@@ -68,11 +68,13 @@
             <option value="count">Number of Runs</option>
         </select>
 
-        <label for="targetDistance">Target Distance:</label>
-        <input type="number" id="targetDistance" placeholder="0" min="0" step="0.01">
+        <label for="target" id="targetLabel">Target Distance:</label>
+        <input type="number" id="target" placeholder="0" min="0" step="0.01">
 
         <button type="submit">Update Chart</button>
     </form>
+
+
 
     <!-- Line Chart canvas -->
     <canvas id="lineChart"></canvas>
