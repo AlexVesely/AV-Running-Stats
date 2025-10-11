@@ -110,3 +110,12 @@ input[type=number] {
 .run-entry.editing {
     color: darkcyan;
 }
+
+.chart-container {
+    max-width: 1200px;        /* limit how wide it can get */
+    margin: 20px auto;       /* center it horizontally */
+}
+
+.chart-container canvas {
+    height: auto ; /* maintain aspect ratio */
+}
