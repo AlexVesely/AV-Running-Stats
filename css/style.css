@@ -5,9 +5,15 @@ main{
     margin: 10px;
 }
 h1{
-    text-align: center; 
+    text-align: center;
+    font-family: 'Righteous';
+    font-weight: 700;
+    font-size: 3rem;
+    color: aqua;
 }
+
 .navbar ul{
+    font-family: Arial;
     list-style-type: none;
     background-color: rgb(65, 58, 58);
     padding: 0px;
