@@ -22,10 +22,10 @@
          <h2>Bar Chart Options</h2>
 
         <label for="startDate">Start Date:</label>
-        <input type="date" id="barChartStartDate">
+        <input type="date" id="barChartStartDate" required>
 
         <label for="endDate">End Date:</label>
-        <input type="date" id="barChartEndDate">
+        <input type="date" id="barChartEndDate" required>
 
         <label for="groupBy">Group by:</label>
         <select id="barChartGroupBy">
@@ -52,10 +52,10 @@
         <h2>Line Chart Options</h2>
 
         <label for="startDate">Start Date:</label>
-        <input type="date" id="lineChartStartDate">
+        <input type="date" id="lineChartStartDate" required>
 
         <label for="endDate">End Date:</label>
-        <input type="date" id="lineChartEndDate">
+        <input type="date" id="lineChartEndDate" required>
 
         <label for="groupBy">Group by:</label>
         <select id="lineChartGroupBy">
@@ -75,8 +75,6 @@
 
         <button type="submit">Update Chart</button>
     </form>
-
-
 
     <!-- Line Chart canvas -->
     <div class="chart-container">

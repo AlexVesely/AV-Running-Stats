@@ -45,9 +45,16 @@ form.addEventListener("submit", function(event) {
     // Get values from inputs
     const date = document.getElementById("runDate").value;
     const distance = document.getElementById("distance").value;
-    const hours = parseInt(document.getElementById("hours").value);
-    const minutes = parseInt(document.getElementById("minutes").value);
+    const hours = parseInt(document.getElementById("hours").value) || 0;;
+    const minutes = parseInt(document.getElementById("minutes").value) || 0;
     const seconds = parseInt(document.getElementById("seconds").value);
+
+    const totalTime = hours * 3600 + minutes * 60 + seconds;
+
+    if (hours == 0 && minutes == 0 && seconds == 0) {
+        alert("You must enter a time greater than zero!");
+        return;
+    }
 
     if (editingIndex === null) {
         // Add new run
