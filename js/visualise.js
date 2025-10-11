@@ -184,6 +184,9 @@ function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
     const start = new Date(startDateStr);
     const end = new Date(endDateStr);
 
+    // Add one day to ensure inclusivity of all days
+    end.setDate(end.getDate() + 1);
+
     let cur = new Date(start);
 
     const labels = [];
@@ -212,6 +215,9 @@ function generateTotalYAxisLabels(startDateStr, endDateStr, groupBy, yAxisType) 
     // Convert strings to Date objects
     const start = new Date(startDateStr);
     const end = new Date(endDateStr);
+
+    // Add one day to ensure inclusivity of all days
+    end.setDate(end.getDate() + 1);
 
     let cur = new Date(start);
 
@@ -258,6 +264,9 @@ function generateCumulativeYAxisLabels(startDateStr, endDateStr, groupBy, yAxisT
     // Convert strings to Date objects
     const start = new Date(startDateStr);
     const end = new Date(endDateStr);
+
+    // Add one day to ensure inclusivity of all days
+    end.setDate(end.getDate() + 1);
 
     let cur = new Date(start);
 
