@@ -35,9 +35,20 @@ yAxisSelect.addEventListener("change", function() {
 // DOMContentLoaded is an event that fires when HTML has loaded, so it is now safe to load from localStorage
 window.addEventListener("DOMContentLoaded", () => {
     loadRuns();
+
+     // Get the first and last day of the current month
+    const startOfMonth = firstDayOfTodaysMonth();
+    const endOfMonth = lastDayOfTodaysMonth();
+
+    // Set those values into the date inputs
+    document.getElementById("barChartStartDate").value = startOfMonth;
+    document.getElementById("barChartEndDate").value = endOfMonth;
+    document.getElementById("lineChartStartDate").value = startOfMonth;
+    document.getElementById("lineChartEndDate").value = endOfMonth;
+    document.getElementById("target").value = 40;
     
-    // Set up chart of todays month when page is loaded
-    updateBarChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "week", "distance");
+    // Set up charts of todays month when page is loaded
+    updateBarChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance");
 
     updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance", 40);
 });
