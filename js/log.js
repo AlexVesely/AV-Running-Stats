@@ -63,7 +63,9 @@ form.addEventListener("submit", function(event) {
 
     // Show all delete buttons again
     document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.style.display = "inline"; 
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
     });
 
     currentSort();
@@ -89,7 +91,9 @@ cancelEditBtn.addEventListener("click", () => {
 
     // Show all delete buttons again
     document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.style.display = "inline"; 
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
 });
 
 });
@@ -264,7 +268,9 @@ function editRun(index) {
 
     // Hide all delete buttons
     document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.style.display = "none";
+        btn.disabled = true;         // disable the button
+        btn.style.opacity = "0.5";   // visually indicate disabled state
+        btn.style.cursor = "not-allowed"; // change cursor
 });
 }
 

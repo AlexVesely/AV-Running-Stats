@@ -330,7 +330,7 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, target) {
     const yAxisValues = generateCumulativeYAxisLabels(startDate,endDate,groupBy,yAxisType);
 
     // Dataset 1:
-    const dataset = {
+    const actualDataset = {
         label: "Actual",
         data: yAxisValues,
         borderColor: "aqua",
@@ -355,7 +355,7 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, target) {
     // Define the full chart data (labels + datasets)
     const chartData = {
         labels: xAxisLabels,
-        datasets: [dataset, targetDataset]
+        datasets: [actualDataset, targetDataset]
     };
 
     // Define options for the chart (titles, scales, etc.)
