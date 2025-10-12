@@ -21,55 +21,70 @@
 
     <br>
 
+    <section id="loggerTitle">
+        <h2>Log New Run</h2>
+    </section>
+
     <form id="runForm">
-        <!-- Date of the run -->
-        <label for="runDate">Date:</label>
-        <input type="date" id="runDate" required>
-        <br>    
+        <!-- Date -->
+        <div class="form-row">
+            <label for="runDate">Date:</label>
+            <input type="date" id="runDate" required>
+        </div>
 
-        <!-- Distance in km -->
-        <label for="distance">Distance (km):</label>
-        <input type="number" id="distance" class="distance-input" placeholder="0" min="0.01" step="0.01" required>
-        <br>
+        <!-- Distance -->
+        <div class="form-row">
+            <label for="distance">Distance (km):</label>
+            <input type="number" id="distance" class="distance-input" placeholder="0" min="0.01" step="0.01" required>
+        </div>
 
-        <!-- Time: hours, minutes, seconds -->
-        <label for="hours">Time:</label>
-        <input type="number" id="hours" class="time-input" placeholder="hh" min="0" step="1"> :
-        <input type="number" id="minutes" class="time-input" placeholder="mm" min="0" max="59" step="1"> :
-        <input type="number" id="seconds" class="time-input" placeholder="ss" min="0" max="59" step="1" required>
-        <br>
+        <!-- Time -->
+        <div class="form-row">
+            <label for="hours">Time:</label>
+            <input type="number" id="hours" class="time-input" placeholder="hh" min="0" step="1"> :
+            <input type="number" id="minutes" class="time-input" placeholder="mm" min="0" max="59" step="1"> :
+            <input type="number" id="seconds" class="time-input" placeholder="ss" min="0" max="59" step="1" required>
+        </div>
 
-        <!-- Main actions -->
-        <button type="submit" id="submitBtn">Add Run</button>
-        <input type="reset" value="Clear">
-
-        <!-- Cancel editing button when editing mode is enabled -->
-        <button type="button" id="cancelEditBtn" style="display:none;">Cancel Editing</button>
+        <!-- Buttons -->
+        <div class="form-row">
+            <button type="submit" id="submitBtn">Add Run</button>
+            <input type="reset" value="Clear">
+            <button type="button" id="cancelEditBtn" style="display:none;">Cancel Editing</button>
+        </div>
     </form>
 
-    <h2>My Runs</h2>
-    <div id="runsList"></div>
+    <section id="sortingButtons">
 
-    <button id="deleteAllButton">Delete All Runs</button>
+        <button id="deleteAllButton">Delete All Runs</button>
 
-    <!-- Date -->
-    <button id="sortDateC" class="sort-btn">Sort by Date  ↓</button>
-    <button id="sortDateNC" class="sort-btn">Sort by Date ↑</button>
+        <!-- Date -->
+        <button id="sortDateC" class="sort-btn">Sort by Date  ↓</button>
+        <button id="sortDateNC" class="sort-btn">Sort by Date ↑</button>
 
-    <!-- Distance -->
-    <button id="sortDistanceA" class="sort-btn">Sort by Distance ↓</button>
-    <button id="sortDistanceD" class="sort-btn">Sort by Distance ↑</button>
+        <!-- Distance -->
+        <button id="sortDistanceA" class="sort-btn">Sort by Distance ↓</button>
+        <button id="sortDistanceD" class="sort-btn">Sort by Distance ↑</button>
 
-    <!-- Total Time -->
-    <button id="sortTimeA" class="sort-btn">Sort by Time ↓</button>
-    <button id="sortTimeD" class="sort-btn">Sort by Time ↑</button>
+        <!-- Total Time -->
+        <button id="sortTimeA" class="sort-btn">Sort by Time ↓</button>
+        <button id="sortTimeD" class="sort-btn">Sort by Time ↑</button>
 
-    <!-- Pace -->
-    <button id="sortPaceA" class="sort-btn">Sort by Pace ↓</button>
-    <button id="sortPaceD" class="sort-btn">Sort by Pace ↑</button>
+        <!-- Pace -->
+        <button id="sortPaceA" class="sort-btn">Sort by Pace ↓</button>
+        <button id="sortPaceD" class="sort-btn">Sort by Pace ↑</button>
+
+
+    </section>
+
+    
+
+
+    <section id="runsSection">
+        <h2>My Runs</h2>
+        <div id="runsList"></div>
+    </section>
 
     <script type="module" src="js/log.js"></script>
-    <br>
-    <br>
 </body>
 </html>

@@ -1,61 +1,85 @@
-body{
-    margin: 0px;
+body {
+    font-family: Arial;
+    margin: 0;
+    background-color: #ffffff;
+    color: #222;
 }
-main{
-    margin: 10px;
-}
-h1{
+
+h1, h2 {
     text-align: center;
+}
+
+h1 {
     font-family: 'Righteous';
     font-weight: 700;
     font-size: 3rem;
-    color: aqua;
+    color: #00bcd4;
+    margin-top: 20px;
 }
 
-.navbar ul{
-    font-family: Arial;
+/* Navbar */
+
+
+.navbar ul {
     list-style-type: none;
-    background-color: rgb(65, 58, 58);
-    padding: 0px;
-    margin: 0px;
-    overflow: hidden;
+    background-color: #333;
+    padding: 0;
+    margin: 0;
     display: flex;
     justify-content: space-evenly;
-    align-items: center; 
+    align-items: center;
 }
-.navbar a{
-    color: aqua;
+
+.navbar a {
+    color: #00bcd4;
     text-decoration: none;
     padding: 15px;
     display: block;
     text-align: center;
 }
-.navbar a:hover{
+
+.navbar a:hover {
     color: white;
 }
-.navbar li{
+
+/* Form Styling */
+
+form#runForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f8f8f8;
+    padding: 20px 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+.form-row label {
     flex: 1;
-    text-align: center;  
+    text-align: left;
 }
 
-/* Make time inputs narrower */
-.time-input {
-    width: 3em;
-    text-align: center;
+.form-row input {
+    flex: 1;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #222;
 }
 
-
+.time-input,
 .distance-input {
-    width: 3em;
-    text-align: center;
-}
-
-.hour-input {
-    width: 5em;
-    text-align: center;
-}
-
-.min-input {
     width: 3em;
     text-align: center;
 }
@@ -65,7 +89,6 @@ h1{
     width: 3em;
     text-align: center;
 }
-
 
 /* Remove arrows in number inputs (Chrome, Safari, Edge, Opera) */
 input[type=number]::-webkit-inner-spin-button, 
@@ -79,42 +102,116 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+/* Buttons */
+
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    all: unset;
+    font-family: inherit;
+    font-size: 1rem;
+    color: white;
+    background-color: #00bcd4;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: #0097a7;
+}
+
+#cancelEditBtn {
+    background-color: #999;
+    color: white;
+}
+
+#deleteAllButton {
+    background-color: red;
+    color: white;
+}
+
+/* Sort Buttons */
+
+#sortingButtons {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.sort-btn {
+    background-color: #eee;
+    color: #333;
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.sort-btn:hover {
+    background-color: #ddd;
+}
+
+.sort-btn.active {
+    background-color: #00bcd4;
+    color: white;
+}
+
+
+/* Runs List */
+
+#runsSection {
+    text-align: center;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
 .run-entry {
     display: flex;
-    align-items: center; /* vertically aligns text and button */
-    margin-bottom: 5px; /* Add a little space below each run */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: 1px solid #909090;
+}
+
+.run-entry.editing {
+    color: #00bcd4;
+    border-color: #00bcd4;
 }
 
 .delete-btn {
     background-color: red;
     color: white;
     border: none;
-    padding: 2px 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
     cursor: pointer;
-    margin-left: 20px; /* puts 20px space between text and button */
 }
 
 .edit-btn {
+    background-color: #555;
+    color: white;
     border: none;
-    padding: 2px 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
     cursor: pointer;
-    margin-left: 20px; /* puts 20px space between text and button */
 }
 
-.sort-btn.active {
-    background-color: gray;
-    color: black;
-}
-
-.run-entry.editing {
-    color: darkcyan;
-}
+/* Charts */
 
 .chart-container {
-    max-width: 1200px;        /* limit how wide it can get */
-    margin: 20px auto;       /* center it horizontally */
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
 .chart-container canvas {
-    height: auto ; /* maintain aspect ratio */
+    height: auto;
 }
