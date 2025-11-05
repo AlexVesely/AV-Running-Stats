@@ -182,6 +182,8 @@ input[type="reset"]:hover {
     height: auto;
 }
 
+/* Pace Page */
+
 #paceContainer {
     display: flex;
     flex-direction: column;  /* stack items vertically */
@@ -205,4 +207,59 @@ input[type="reset"]:hover {
 #paceContainer input.min-input {
     width: 40px; 
     text-align: center;
+}
+
+/* Home Page */
+
+.home-content {
+    max-width: 1000px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.feature-card {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.feature-card h3 {
+    margin-bottom: 10px;
+    color: #00bcd4;
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.feature-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #00bcd4;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.feature-btn:hover {
+    background-color: #0097a7;
+}
+
+.footer-note {
+    margin-top: 40px;
+    font-style: italic;
+    color: #555;
 }
