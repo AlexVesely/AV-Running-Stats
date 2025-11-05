@@ -72,7 +72,7 @@ lineChartForm.addEventListener("submit", function(event) {
     const yAxisType = document.getElementById("lineChartYAxisType").value;
     const target = document.getElementById("target").value;
 
-    updateLineChart(startDate, endDate, groupBy, yAxisType, target);
+    updateLineChart("2025-01-01", "2025-12-31", groupBy, yAxisType, target);
 });
 
 // Load runs saved in myRuns2025.js (Hardcoded examples)
