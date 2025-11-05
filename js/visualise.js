@@ -1,4 +1,4 @@
-import Run from "./Run.js";
+import Run from "./run.js";
 import { runs2025 } from "./myRuns2025.js";
 
 // Array to hold all runs
@@ -30,10 +30,6 @@ yAxisSelect.addEventListener("change", function() {
     }
 });
 
-// Load runs from localStorage when the page first opens
-// localStorage is a little 'storage box' in every browser that isnt cleared until the user deletes it.
-// localStorage stores key-value pairs for us
-// DOMContentLoaded is an event that fires when HTML has loaded, so it is now safe to load from localStorage
 window.addEventListener("DOMContentLoaded", () => {
     loadRuns();
 

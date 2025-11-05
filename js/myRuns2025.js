@@ -1,4 +1,4 @@
-import Run from "./Run.js";
+import Run from "./run.js";
 
 // Hard-coded runs sorted by date
 export const runs2025 = [

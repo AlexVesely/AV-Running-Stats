@@ -1,4 +1,4 @@
-import Run from "./Run.js";
+import Run from "./run.js";
 import { runs2025 } from "./myRuns2025.js";
 
 // Array holding all runs that have been loaded in

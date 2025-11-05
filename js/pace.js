@@ -1,7 +1,6 @@
 const calculateBtn = document.getElementById("calculateBtn");
 const resultText = document.getElementById("result")
 
-
 calculateBtn.addEventListener("click", () => {
     const distance = document.getElementById("distance").value;
     const time = document.getElementById("time").value;
