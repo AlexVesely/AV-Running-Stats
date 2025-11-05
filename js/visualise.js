@@ -46,12 +46,12 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("barChartEndDate").value = endOfMonth;
     document.getElementById("lineChartStartDate").value = startOfMonth;
     document.getElementById("lineChartEndDate").value = endOfMonth;
-    document.getElementById("target").value = 40;
+    document.getElementById("target").value = 500;
     
     // Set up charts of todays month when page is loaded
     updateBarChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance");
 
-    updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance", 40);
+    updateLineChart("2025-01-01", "2025-12-31", "day", "distance", 500);
 });
 
 // Handle bar chart form submission
