@@ -19,7 +19,6 @@ h1 {
 
 /* Navbar */
 
-
 .navbar ul {
     list-style-type: none;
     background-color: #333;
@@ -128,16 +127,6 @@ input[type="reset"]:hover {
     background-color: #0097a7;
 }
 
-#cancelEditBtn {
-    background-color: #999;
-    color: white;
-}
-
-#deleteAllButton {
-    background-color: red;
-    color: white;
-}
-
 /* Sort Buttons */
 
 #sortingButtons {
@@ -182,29 +171,6 @@ input[type="reset"]:hover {
     border: 1px solid #909090;
 }
 
-.run-entry.editing {
-    color: #00bcd4;
-    border-color: #00bcd4;
-}
-
-.delete-btn {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.edit-btn {
-    background-color: #555;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 /* Charts */
 
 .chart-container {
@@ -214,4 +180,29 @@ input[type="reset"]:hover {
 
 .chart-container canvas {
     height: auto;
+}
+
+#paceContainer {
+    display: flex;
+    flex-direction: column;  /* stack items vertically */
+    align-items: center;     /* center items horizontally */
+    margin: 20px auto;       /* center container on page horizontally */
+    text-align: center;      /* center text in labels and result */
+}
+
+#paceContainer label,
+#paceContainer input,
+#paceContainer button {
+    margin: 5px 0;          
+}
+
+#paceContainer input.hour-input
+{
+    width: 63px; 
+    text-align: center;
+}
+
+#paceContainer input.min-input {
+    width: 40px; 
+    text-align: center;
 }
