@@ -40,8 +40,8 @@ window.addEventListener("DOMContentLoaded", () => {
     // Set those values into the date inputs
     document.getElementById("barChartStartDate").value = startOfMonth;
     document.getElementById("barChartEndDate").value = endOfMonth;
-    document.getElementById("lineChartStartDate").value = startOfMonth;
-    document.getElementById("lineChartEndDate").value = endOfMonth;
+    document.getElementById("lineChartStartDate").value = "2025-01-01";
+    document.getElementById("lineChartEndDate").value = "2025-12-31";
     document.getElementById("target").value = 500;
     
     // Set up charts of todays month when page is loaded
@@ -72,7 +72,7 @@ lineChartForm.addEventListener("submit", function(event) {
     const yAxisType = document.getElementById("lineChartYAxisType").value;
     const target = document.getElementById("target").value;
 
-    updateLineChart("2025-01-01", "2025-12-31", groupBy, yAxisType, target);
+    updateLineChart(startDate, endDate, groupBy, yAxisType, target);
 });
 
 // Load runs saved in myRuns2025.js (Hardcoded examples)
