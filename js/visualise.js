@@ -1,7 +1,8 @@
 import Run from "./Run.js";
+import { runs2025 } from "./myRuns2025.js";
 
 // Array to hold all runs
-let runs = [];
+let runs = runs2025;
 let barChart;
 let lineChart;
 
@@ -13,7 +14,7 @@ const yAxisSelect = document.getElementById("lineChartYAxisType");
 const targetLabel = document.getElementById("targetLabel");
 const targetInput = document.getElementById("target");
 
-// Listen for any change in the dropdown menu
+// Update target label/input when Y-axis type changes
 yAxisSelect.addEventListener("change", function() {
     // "this.value" means: whatever option is currently selected in the dropdown
     if (this.value == "count") {
@@ -53,6 +54,7 @@ window.addEventListener("DOMContentLoaded", () => {
     updateLineChart(firstDayOfTodaysMonth(), lastDayOfTodaysMonth(), "day", "distance", 40);
 });
 
+// Handle bar chart form submission
 barChartForm.addEventListener("submit", function(event) {
     event.preventDefault(); // stop page reload
 
@@ -64,6 +66,7 @@ barChartForm.addEventListener("submit", function(event) {
     updateBarChart(startDate, endDate, groupBy, yAxisType);
 });
 
+// Handle line chart form submission
 lineChartForm.addEventListener("submit", function(event) {
     event.preventDefault(); // stop page reload
 
@@ -76,16 +79,9 @@ lineChartForm.addEventListener("submit", function(event) {
     updateLineChart(startDate, endDate, groupBy, yAxisType, target);
 });
 
-// Load runs array from localStorage
+// Load runs saved in myRuns2025.js (Hardcoded examples)
 function loadRuns() {
-    const storedRuns = localStorage.getItem("runs");
-    if (storedRuns) {
-        // Parse JSON back into objects
-        const parsedRuns = JSON.parse(storedRuns);
-
-        // Recreate them as Run instances
-        runs = parsedRuns.map(r => new Run(r.date, r.distance, r.hours, r.minutes, r.seconds)); // Cheeky declarative programming
-    }
+    runs = runs2025;
 }
 
 function firstDayOfTodaysMonth() {
@@ -109,74 +105,6 @@ function lastDayOfTodaysMonth() {
     const lastDay = `${todaysYear}-${todaysMonth}-${String(lastDate.getDate()).padStart(2,"0")}`; 
 
     return lastDay;
-}
-
-function updateBarChart(startDate, endDate, groupBy, yAxisType) {
-    // Get the 2D drawing context of the <canvas> element
-    const canvasContext = document.getElementById("barChart").getContext("2d");
-
-    // Destroy the old chart if it exists
-    if (barChart) {
-        barChart.destroy();
-    }
-
-    let yTitle
-    // What to write on axis label?
-    if (yAxisType == "distance") {
-        yTitle = "Total Distance (km)";
-    } else if (yAxisType == "count") {
-        yTitle = "Number of runs";
-    }
-
-    // Define the labels that go on the X-axis
-    const xAxisLabels = generateXAxisLabels(startDate,endDate,groupBy);
-
-    // Define the numbers that go on the Y-axis
-    const yAxisValues = generateTotalYAxisLabels(startDate,endDate,groupBy,yAxisType);
-
-    // Define dataset
-    const dataset = {
-        data: yAxisValues,      // Y values
-        backgroundColor: "aqua" // Color of the bars
-    };
-
-    // Define the full chart data (labels + datasets)
-    const chartData = {
-        labels: xAxisLabels,
-        datasets: [dataset]
-    };
-
-    // Define options for the chart (titles, scales, etc.)
-    const chartOptions = {
-        responsive: true, // Make chart resize with the window
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: "Period" // X-axis title
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: yTitle // Y-axis title
-                },
-                beginAtZero: true
-            }
-        }
-    };
-
-    // Create the new Chart.js chart object 
-    barChart = new Chart(canvasContext, {
-        type: "bar",
-        data: chartData,
-        options: chartOptions
-    });
 }
 
 function generateXAxisLabels(startDateStr, endDateStr, groupBy) {
@@ -386,6 +314,74 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, target) {
     // Create the new Chart.js lineChart object 
     lineChart = new Chart(ctx, {
         type: "line",
+        data: chartData,
+        options: chartOptions
+    });
+}
+
+function updateBarChart(startDate, endDate, groupBy, yAxisType) {
+    // Get the 2D drawing context of the <canvas> element
+    const canvasContext = document.getElementById("barChart").getContext("2d");
+
+    // Destroy the old chart if it exists
+    if (barChart) {
+        barChart.destroy();
+    }
+
+    let yTitle
+    // What to write on axis label?
+    if (yAxisType == "distance") {
+        yTitle = "Total Distance (km)";
+    } else if (yAxisType == "count") {
+        yTitle = "Number of runs";
+    }
+
+    // Define the labels that go on the X-axis
+    const xAxisLabels = generateXAxisLabels(startDate,endDate,groupBy);
+
+    // Define the numbers that go on the Y-axis
+    const yAxisValues = generateTotalYAxisLabels(startDate,endDate,groupBy,yAxisType);
+
+    // Define dataset
+    const dataset = {
+        data: yAxisValues,      // Y values
+        backgroundColor: "aqua" // Color of the bars
+    };
+
+    // Define the full chart data (labels + datasets)
+    const chartData = {
+        labels: xAxisLabels,
+        datasets: [dataset]
+    };
+
+    // Define options for the chart (titles, scales, etc.)
+    const chartOptions = {
+        responsive: true, // Make chart resize with the window
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Period" // X-axis title
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: yTitle // Y-axis title
+                },
+                beginAtZero: true
+            }
+        }
+    };
+
+    // Create the new Chart.js chart object 
+    barChart = new Chart(canvasContext, {
+        type: "bar",
         data: chartData,
         options: chartOptions
     });
