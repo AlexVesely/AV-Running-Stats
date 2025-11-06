@@ -26,6 +26,7 @@ Run Log
 
 Visualise Runs
 - Running trends can be viewed over a specific time period through a Chart.js bar and line chart.
+- Line charts can compare runs to a target goal within the selected time period.
 - Data can be filtered and grouped by days, weeks or months.
 - Compare total distances or number of runs between a specific time period.
 
