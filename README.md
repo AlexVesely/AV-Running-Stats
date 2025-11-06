@@ -16,8 +16,9 @@ Please visit the site yourself! : https://alexvesely.github.io/AV-Running-Stats/
 ## Features
 
 General
--Clean website interface with complex CSS styling.
--Built entirely with HTML, CSS, and JavaScript.
+
+- Clean website interface with complex CSS styling.
+- Built entirely with HTML, CSS, and JavaScript.
 
 Run Log
 - Displays all runs from a static dataset.
