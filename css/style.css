@@ -263,3 +263,10 @@ input[type="reset"]:hover {
     font-style: italic;
     color: #555;
 }
+
+/* Nav Bar */
+
+.navbar a.active {
+    background-color: #015056;
+    border-radius: 20px;
+}
