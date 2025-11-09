@@ -1,6 +1,6 @@
 # AV Running Stats
 
-<img src = "https://github.com/user-attachments/assets/1c0fa95d-25bd-4413-bc58-76df88faa223" width=100%>
+<img src = "https://github.com/user-attachments/assets/24990948-76bc-49ff-80cc-231f8f1985b7" width=100%>
 <img src = "https://github.com/user-attachments/assets/d975fc77-eb1e-43b3-aa48-a9bc95b72c67" width=100%>
 
 ## Intro
