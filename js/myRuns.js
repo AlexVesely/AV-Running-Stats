@@ -1,7 +1,7 @@
 import Run from "./run.js";
 
 // Hard-coded runs sorted by date
-export const runs2025 = [
+export const myRuns = [
     new Run("2025-01-07", 5.01, 0, 30, 43),
     new Run("2025-01-09", 5.09, 0, 28, 48),
     new Run("2025-01-16", 6, 0, 36, 36),
@@ -49,4 +49,5 @@ export const runs2025 = [
     new Run("2025-12-21", 3.04, 0, 18, 29),
     new Run("2025-12-26", 3.01, 0, 17, 25),
     new Run("2025-12-30", 5.78, 0, 36, 44),
+    new Run("2026-01-03", 2.96, 0, 17, 59),
 ];

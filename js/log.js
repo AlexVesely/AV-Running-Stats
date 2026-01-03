@@ -1,8 +1,8 @@
 import Run from "./run.js";
-import { runs2025 } from "./myRuns2025.js";
+import { myRuns } from "./myRuns.js";
 
 // Array holding all runs that have been loaded in
-let runs = runs2025;
+let runs = myRuns;
 
 // Store current way runs are being sorted
 let currentSort = () => sortByDate(true);

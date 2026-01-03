@@ -1,8 +1,8 @@
 import Run from "./run.js";
-import { runs2025 } from "./myRuns2025.js";
+import { myRuns } from "./myRuns.js";
 
 // Array to hold all runs
-let runs = runs2025;
+let runs = myRuns;
 let barChart;
 let lineChart;
 
@@ -75,9 +75,9 @@ lineChartForm.addEventListener("submit", function(event) {
     updateLineChart(startDate, endDate, groupBy, yAxisType, target);
 });
 
-// Load runs saved in myRuns2025.js (Hardcoded examples)
+// Load runs saved in myRuns.js (Hardcoded examples)
 function loadRuns() {
-    runs = runs2025;
+    runs = myRuns;
 }
 
 function firstDayOfTodaysMonth() {
