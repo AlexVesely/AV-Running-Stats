@@ -247,6 +247,14 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, target) {
         lineChart.destroy();
     }
 
+    let yTitle
+    // What to write on axis label?
+    if (yAxisType == "distance") {
+        yTitle = "Total Distance (km)";
+    } else if (yAxisType == "count") {
+        yTitle = "Number of runs";
+    }
+
     // Define the labels that go on the X-axis
     const xAxisLabels = generateXAxisLabels(startDate, endDate, groupBy);
 
@@ -300,7 +308,7 @@ function updateLineChart(startDate, endDate, groupBy, yAxisType, target) {
             y: {
                 title: {
                     display: true,
-                    text: "Total Distance (km)"
+                    text: yTitle
                 },
                 beginAtZero: true
             }
